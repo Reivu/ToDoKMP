@@ -66,8 +66,8 @@ android {
 
     defaultConfig {
         applicationId = "org.reivnick.todo"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk = 28
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }
@@ -88,10 +88,15 @@ android {
     buildFeatures {
         compose = true
     }
-    buildToolsVersion = "35.0.0 rc4"
-    ndkVersion = "27.0.11718014 rc1"
+    buildToolsVersion = "34.0.0"
+    ndkVersion = "26.2.11394342"
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+    compose.resources {
+        publicResClass = true
+        packageOfResClass = "me.todo.library.resources"
+        generateResClass = always
     }
 }
 

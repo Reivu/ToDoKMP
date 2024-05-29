@@ -8,8 +8,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import data.MongoDB
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 import presentation.screen.home.HomeScreen
+import presentation.screen.home.HomeViewModel
+import presentation.screen.task.TaskViewModel
 
 
 val primaryColor = Color(color = 0xFF4c662b)
@@ -25,6 +30,8 @@ val darkOnPrimaryContainerColor = Color(color = 0xFF102000)
 @Composable
 @Preview
 fun App() {
+    initializeKoin()
+
     val lightColors = lightColorScheme(
         primary = primaryColor,
         onPrimary = onPrimaryColor,
@@ -47,4 +54,14 @@ fun App() {
             SlideTransition(it)
         }
     }
+}
+
+val mongodbModule = module {
+    single { MongoDB() }
+    factory { HomeViewModel(get()) }
+    factory { TaskViewModel(get()) }
+}
+
+fun initializeKoin() {
+    startKoin { modules(mongodbModule) }
 }
